@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vui Học Tiếng Việt 5 - Ôn Tập Tuần 7 (KNTT)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FF7B54;
+      --secondary: #FFB26B;
+      --accent: #FFD56F;
+      --green: #4E9F3D;
+      --red: #EB4747;
+      --blue: #4D96FF;
+      --card-bg: #FFFFFF;
+      --text: #2D3748;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Quicksand', 'Nunito', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #A8EDEA 0%, #FED6E3 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Mây bồng bềnh phong cách hoạt hình */
+    .cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 50px;
+      z-index: 0;
+      animation: float 20s infinite linear;
+    }
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: inherit;
+      border-radius: 50%;
+    }
+    .cloud1 { width: 140px; height: 45px; top: 10%; left: -160px; animation-duration: 22s; }
+    .cloud1::before { width: 50px; height: 50px; top: -20px; left: 20px; }
+    .cloud1::after { width: 70px; height: 70px; top: -30px; left: 55px; }
+
+    .cloud2 { width: 180px; height: 55px; bottom: 12%; left: -200px; animation-duration: 28s; animation-delay: 5s; }
+    .cloud2::before { width: 60px; height: 60px; top: -25px; left: 30px; }
+    .cloud2::after { width: 80px; height: 80px; top: -35px; left: 75px; }
+
+    @keyframes float {
+      from { transform: translateX(-220px); }
+      to { transform: translateX(115vw); }
+    }
+
+    /* Khung trò chơi */
+    .game-container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 800px;
+      background: var(--card-bg);
+      border-radius: 28px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12), 0 0 0 8px rgba(255, 255, 255, 0.75);
+      padding: 24px 28px;
+      overflow: hidden;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #FFF3E2;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-weight: 800;
+      color: #D35400;
+      border: 2px solid #FFE0B2;
+      font-size: 15px;
+    }
+
+    .audio-controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      background: #F0F4FF;
+      border: 2px solid #D0E0FF;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .icon-btn:hover {
+      transform: scale(1.1);
+      background: #E0EBFF;
+    }
+
+    /* Thanh tiến trình */
+    .progress-box {
+      width: 100%;
+      height: 14px;
+      background: #F1F3F5;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      border: 2px solid #E9ECEF;
+    }
+    .progress-bar {
+      width: 10%;
+      height: 100%;
+      background: linear-gradient(90deg, #4D96FF, #6BCB77);
+      border-radius: 20px;
+      transition: width 0.4s ease;
+    }
+
+    /* Màn hình bắt đầu & Kết thúc */
+    .start-screen, .end-screen {
+      text-align: center;
+      padding: 30px 10px;
+    }
+
+    .mascot {
+      font-size: 72px;
+      animation: bounce 1.6s infinite alternate ease-in-out;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-16px); }
+    }
+
+    h1 {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      color: #FF5722;
+      font-size: 27px;
+      margin-bottom: 12px;
+      text-shadow: 2px 2px 0px #FFE0B2;
+    }
+
+    p.subtitle {
+      color: #636E72;
+      font-size: 17px;
+      line-height: 1.55;
+      margin-bottom: 24px;
+    }
+
+    .big-btn {
+      background: linear-gradient(135deg, #FF7B54 0%, #FFB26B 100%);
+      color: white;
+      border: none;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 19px;
+      padding: 14px 40px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(255, 123, 84, 0.38);
+      transition: transform 0.15s, box-shadow 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .big-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 12px 22px rgba(255, 123, 84, 0.48);
+    }
+    .big-btn:active {
+      transform: translateY(1px);
+    }
+
+    /* Khung câu hỏi & đáp án */
+    .question-box {
+      background: #F8F9FD;
+      border: 3px dashed #CBD5E1;
+      border-radius: 20px;
+      padding: 18px 22px;
+      margin-bottom: 20px;
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .robot-mini {
+      font-size: 40px;
+      flex-shrink: 0;
+    }
+
+    .question-text {
+      font-size: 18px;
+      color: #1E293B;
+      font-weight: 800;
+      line-height: 1.55;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 620px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+      .question-text {
+        font-size: 16px;
+      }
+    }
+
+    .opt-btn {
+      background: white;
+      border: 3px solid #E2E8F0;
+      border-radius: 18px;
+      padding: 13px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
+      text-align: left;
+    }
+
+    .opt-btn:hover:not(:disabled) {
+      border-color: #60A5FA;
+      background: #EFF6FF;
+      transform: translateY(-2px);
+    }
+
+    .opt-letter {
+      width: 34px;
+      height: 34px;
+      background: #F1F5F9;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #475569;
+      font-weight: 900;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .opt-btn.correct {
+      background: #E8F5E9 !important;
+      border-color: #4CAF50 !important;
+      color: #1B5E20 !important;
+      animation: pulse 0.5s ease;
+    }
+    .opt-btn.correct .opt-letter {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .opt-btn.wrong {
+      background: #FFEBEE !important;
+      border-color: #EF5350 !important;
+      color: #B71C1C !important;
+    }
+    .opt-btn.wrong .opt-letter {
+      background: #EF5350;
+      color: white;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+      100% { transform: scale(1); }
+    }
+
+    /* Khung giải thích */
+    .explanation-box {
+      display: none;
+      background: #FFF9E6;
+      border-left: 6px solid #FFB300;
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      animation: slideUp 0.3s ease;
+    }
+
+    .explanation-title {
+      font-weight: 800;
+      color: #B78103;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 15px;
+    }
+
+    .explanation-content {
+      font-size: 16px;
+      color: #5D4037;
+      line-height: 1.5;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Canvas Pháo hoa */
+    #fireworks {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mây bồng bềnh -->
+  <div class="cloud cloud1"></div>
+  <div class="cloud cloud2"></div>
+  <canvas id="fireworks"></canvas>
+
+  <div class="game-container">
+    <!-- Màn hình mở đầu -->
+    <div id="startScreen" class="start-screen">
+      <div class="mascot">🌱🌋</div>
+      <h1>VUI HỌC TIẾNG VIỆT 5</h1>
+      <p class="subtitle">
+        Bộ 10 câu hỏi trắc nghiệm ôn tập Tuần 7 (Trang 64 - 71 SGK Kết Nối Tri Thức)<br>
+        Tự động phát âm thanh câu hỏi, đáp án và giải thích chi tiết, sinh động!
+      </p>
+      <button class="big-btn" onclick="startGame()">
+        🚀 Bắt Đầu Làm Bài
+      </button>
+    </div>
+
+    <!-- Màn hình câu hỏi trắc nghiệm -->
+    <div id="quizScreen" style="display: none;">
+      <div class="top-bar">
+        <div class="badge" id="questionCounter">📝 Câu: 1 / 10</div>
+        <div class="badge" id="scoreCounter">⭐ Điểm: 0</div>
+        <div class="audio-controls">
+          <button class="icon-btn" id="repeatVoiceBtn" title="Đọc lại câu hỏi" onclick="speakCurrentQuestion()">🔊</button>
+          <button class="icon-btn" id="toggleVoiceBtn" title="Bật/Tắt giọng đọc" onclick="toggleMute()">🎙️</button>
+        </div>
+      </div>
+
+      <div class="progress-box">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <div class="question-box">
+        <div class="robot-mini">🤖</div>
+        <div class="question-text" id="questionText">Đang tải câu hỏi...</div>
+      </div>
+
+      <div class="options-grid" id="optionsContainer">
+        <!-- Danh sách đáp án A, B, C, D -->
+      </div>
+
+      <!-- Khung giải thích 2 dòng -->
+      <div class="explanation-box" id="explanationBox">
+        <div class="explanation-title">💡 Giải thích từ Rô-bốt:</div>
+        <div class="explanation-content" id="explanationContent">...</div>
+      </div>
+
+      <div style="text-align: right;">
+        <button id="nextBtn" class="big-btn" style="display: none;" onclick="nextQuestion()">
+          Câu Tiếp Theo ⏩
+        </button>
+      </div>
+    </div>
+
+    <!-- Màn hình kết thúc -->
+    <div id="endScreen" class="end-screen" style="display: none;">
+      <div class="mascot" id="finalMascot">🏆</div>
+      <h1 id="finalTitle">CHÚC MỪNG EM ĐÃ HOÀN THÀNH!</h1>
+      <p class="subtitle" id="finalScoreText">Em đã đạt 10/10 điểm!</p>
+      <button class="big-btn" onclick="restartGame()">
+        🔄 Thử Thách Lại Lần Nữa
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Dữ liệu 10 câu hỏi Tuần 7 chuẩn hóa kèm phiên âm giọng đọc
+    const questions = [
+      {
+        q: "Trong bài thơ Mầm non, khi mùa đông đến, mầm non nằm nép lặng im ở đâu?",
+        speechQ: "Câu 1. Trong bài thơ Mầm non, khi mùa đông đến, mầm non nằm nép lặng im ở đâu?",
+        options: [
+          { text: "Dưới một lớp cỏ xanh dày", speech: "Dưới một lớp cỏ xanh dày" },
+          { text: "Dưới vỏ một cành bàng", speech: "Dưới vỏ một cành bàng" },
+          { text: "Bên bờ một dòng suối vắng", speech: "Bên bờ một dòng suối vắng" },
+          { text: "Trong kẽ nứt của vách đá", speech: "Trong kẽ nứt của vách đá" }
+        ],
+        correct: 1, // B
+        explain: "Khổ thơ đầu viết: 'Dưới vỏ một cành bàng / Còn một vài lá đỏ / Một mầm non nho nhỏ / Còn nằm nép lặng im...'",
+        speechExplain: "Khổ 1 bài thơ miêu tả mầm non nằm nép lặng im dưới vỏ một cành bàng."
+      },
+      {
+        q: "Nhờ dấu hiệu nào mà mầm non nhận ra mùa xuân đã về?",
+        speechQ: "Câu 2. Nhờ dấu hiệu nào mà mầm non nhận ra mùa xuân đã về?",
+        options: [
+          { text: "Nhờ thấy đàn bướm rập rờn bay lượn", speech: "Nhờ thấy đàn bướm rập rờn bay lượn" },
+          { text: "Nhờ ánh nắng ban mai rọi xuống ấm áp", speech: "Nhờ ánh nắng ban mai rọi xuống ấm áp" },
+          { text: "Nhờ tiếng chim hót: Chíp chiu chiu! Xuân đến", speech: "Nhờ tiếng chim hót: Chíp chiu chiu! Xuân đến" },
+          { text: "Nhờ một cơn mưa rào đầu mùa đổ xuống", speech: "Nhờ một cơn mưa rào đầu mùa đổ xuống" }
+        ],
+        correct: 2, // C
+        explain: "Khổ 5 bài thơ viết: 'Chợt một tiếng chim kêu: / Chíp chiu chiu! Xuân đến'. Nghe thấy thế mầm non vội bật tung vỏ rơi.",
+        speechExplain: "Mầm non nhận ra mùa xuân nhờ tiếng chim hót reo vang: Chíp chiu chiu! Xuân đến."
+      },
+      {
+        q: "Thế nào là từ đa nghĩa?",
+        speechQ: "Câu 3. Thế nào là từ đa nghĩa?",
+        options: [
+          { text: "Là những từ có cách phát âm và chữ viết giống nhau nhưng nghĩa khác nhau", speech: "Là những từ có cách phát âm và chữ viết giống nhau nhưng nghĩa khác nhau" },
+          { text: "Là những từ có nghĩa giống nhau hoặc gần giống nhau", speech: "Là những từ có nghĩa giống nhau hoặc gần giống nhau" },
+          { text: "Là từ có nghĩa gốc và một hoặc một số nghĩa chuyển có liên hệ với nhau", speech: "Là từ có nghĩa gốc và một hoặc một số nghĩa chuyển có liên hệ với nhau" },
+          { text: "Là từ chỉ được dùng trong văn học và thơ ca", speech: "Là từ chỉ được dùng trong văn học và thơ ca" }
+        ],
+        correct: 2, // C
+        explain: "Ghi nhớ SGK nêu rõ: Từ đa nghĩa là từ có nhiều nghĩa, trong đó có một nghĩa gốc và một hoặc một số nghĩa chuyển.",
+        speechExplain: "Từ đa nghĩa là từ có nhiều nghĩa, gồm một nghĩa gốc và một hoặc một số nghĩa chuyển có liên hệ mật thiết với nhau."
+      },
+      {
+        q: "Trong câu thơ 'Mênh mông biển lúa đâu trời đẹp hơn', từ 'biển' được dùng với nghĩa gì?",
+        speechQ: "Câu 4. Trong câu thơ Mênh mông biển lúa đâu trời đẹp hơn, từ biển được dùng với nghĩa gì?",
+        options: [
+          { text: "Nghĩa gốc chỉ vùng nước mặn rộng lớn", speech: "Nghĩa gốc chỉ vùng nước mặn rộng lớn" },
+          { text: "Nghĩa chuyển chỉ khoảng không gian rộng lớn bạt ngàn", speech: "Nghĩa chuyển chỉ khoảng không gian rộng lớn bạt ngàn" },
+          { text: "Nghĩa gốc chỉ thời tiết trên cánh đồng", speech: "Nghĩa gốc chỉ thời tiết trên cánh đồng" },
+          { text: "Cả nghĩa gốc và nghĩa chuyển đều đúng", speech: "Cả nghĩa gốc và nghĩa chuyển đều đúng" }
+        ],
+        correct: 1, // B
+        explain: "Nghĩa gốc của 'biển' là vùng nước mặn rộng lớn. Ở đây 'biển lúa' dùng theo nghĩa chuyển, chỉ cánh đồng lúa bạt ngàn.",
+        speechExplain: "Từ biển ở đây là nghĩa chuyển, dùng để gợi tả cánh đồng lúa rộng mênh mông như biển."
+      },
+      {
+        q: "Từ 'lưng' trong cụm từ nào dưới đây được dùng theo nghĩa gốc?",
+        speechQ: "Câu 5. Từ lưng trong cụm từ nào dưới đây được dùng theo nghĩa gốc?",
+        options: [
+          { text: "Lưng đồi", speech: "Lưng đồi" },
+          { text: "Lơ lửng treo lưng trời", speech: "Lơ lửng treo lưng trời" },
+          { text: "Lưng mẹ cõng em", speech: "Lưng mẹ cõng em" },
+          { text: "Lưng núi đá", speech: "Lưng núi đá" }
+        ],
+        correct: 2, // C
+        explain: "Nghĩa gốc của 'lưng' là bộ phận cơ thể người hoặc động vật ở phía sau. Lưng đồi, lưng trời, lưng núi là nghĩa chuyển.",
+        speechExplain: "Lưng mẹ là bộ phận cơ thể người nên là nghĩa gốc. Các trường hợp còn lại đều là nghĩa chuyển."
+      },
+      {
+        q: "Khái niệm 'Mác-ma' trong bài Những ngọn núi nóng rẫy có nghĩa là gì?",
+        speechQ: "Câu 6. Khái niệm Mác-ma trong bài Những ngọn núi nóng rẫy có nghĩa là gì?",
+        options: [
+          { text: "Lớp tro bụi xám xịt bay lơ lửng trên không trung", speech: "Lớp tro bụi xám xịt bay lơ lửng trên không trung" },
+          { text: "Lớp đá cứng ngoài cùng của bề mặt vỏ Trái Đất", speech: "Lớp đá cứng ngoài cùng của bề mặt vỏ Trái Đất" },
+          { text: "Đất đai màu mỡ bao quanh chân các ngọn núi", speech: "Đất đai màu mỡ bao quanh chân các ngọn núi" },
+          { text: "Đá bị sức nóng nung chảy thành chất lỏng đặc quánh trong lòng đất", speech: "Đá bị sức nóng nung chảy thành chất lỏng đặc quánh trong lòng đất" }
+        ],
+        correct: 3, // D
+        explain: "Từ ngữ trang 69 SGK giải thích: Mác-ma là đá nóng chảy ở nhiệt độ khoảng 700 đến 1300 độ C trong lòng đất.",
+        speechExplain: "Mác-ma là đá nóng chảy thành chất lỏng đặc quánh ở nhiệt độ rất cao trong lòng đất."
+      },
+      {
+        q: "Theo bài đọc Những ngọn núi nóng rẫy, thực tế núi lửa có những hình dạng nào?",
+        speechQ: "Câu 7. Theo bài đọc Những ngọn núi nóng rẫy, thực tế núi lửa có những hình dạng nào?",
+        options: [
+          { text: "Chỉ duy nhất có hình nón nhọn", speech: "Chỉ duy nhất có hình nón nhọn" },
+          { text: "Có quả hình nón, có quả lại hình tròn thoai thoải", speech: "Có quả hình nón, có quả lại hình tròn thoai thoải" },
+          { text: "Chỉ có hình chóp cụt nằm dưới đáy biển", speech: "Chỉ có hình chóp cụt nằm dưới đáy biển" },
+          { text: "Luôn luôn có hình trụ thẳng đứng", speech: "Luôn luôn có hình trụ thẳng đứng" }
+        ],
+        correct: 1, // B
+        explain: "Bài đọc nêu rõ: Núi lửa không phải bao giờ cũng y như nhau; có quả núi lửa hình nón, có quả lại hình tròn thoai thoải.",
+        speechExplain: "Trong thực tế, núi lửa có quả hình nón nhưng cũng có quả lại hình tròn thoai thoải."
+      },
+      {
+        q: "Từ ngữ nào dưới đây KHÔNG PHẢI là hiện tượng tự nhiên gây thiệt hại nặng nề cho đời sống con người?",
+        speechQ: "Câu 8. Từ ngữ nào dưới đây không phải là hiện tượng tự nhiên gây thiệt hại nặng nề cho đời sống con người?",
+        options: [
+          { text: "Động đất", speech: "Động đất" },
+          { text: "Núi lửa phun trào", speech: "Núi lửa phun trào" },
+          { text: "Sóng thần", speech: "Sóng thần" },
+          { text: "Mưa xuân lất phất", speech: "Mưa xuân lất phất" }
+        ],
+        correct: 3, // D
+        explain: "Động đất, sóng thần, núi lửa phun trào là thiên tai nguy hiểm. Còn mưa xuân lất phất là hiện tượng thời tiết hiền hòa, tươi đẹp.",
+        speechExplain: "Mưa xuân lất phất là hiện tượng thời tiết êm dịu, không gây thiệt hại cho con người."
+      },
+      {
+        q: "Bố cục của một bài văn tả phong cảnh thường gồm mấy phần?",
+        speechQ: "Câu 9. Bố cục của một bài văn tả phong cảnh thường gồm mấy phần?",
+        options: [
+          { text: "Gồm 2 phần: Mở đầu và Diễn biến", speech: "Gồm 2 phần: Mở đầu và Diễn biến" },
+          { text: "Gồm 3 phần: Mở bài, Thân bài, Kết bài", speech: "Gồm 3 phần: Mở bài, Thân bài, Kết bài" },
+          { text: "Gồm 4 phần: Giới thiệu, Tả chi tiết, Cảm nghĩ và Đánh giá", speech: "Gồm 4 phần: Giới thiệu, Tả chi tiết, Cảm nghĩ và Đánh giá" },
+          { text: "Không cần chia phần cụ thể", speech: "Không cần chia phần cụ thể" }
+        ],
+        correct: 1, // B
+        explain: "Bài văn tả phong cảnh thường có 3 phần: Mở bài (giới thiệu phong cảnh), Thân bài (miêu tả chi tiết), Kết bài (nêu cảm nghĩ).",
+        speechExplain: "Bài văn tả phong cảnh gồm 3 phần rõ ràng là Mở bài, Thân bài và Kết bài."
+      },
+      {
+        q: "Theo phiếu đọc sách trang 71 SGK, núi lửa mang lại lợi ích nào sau đây cho con người?",
+        speechQ: "Câu 10. Theo phiếu đọc sách trang 71 Sách giáo khoa, núi lửa mang lại lợi ích nào sau đây cho con người?",
+        options: [
+          { text: "Giúp làm dịu mát khí hậu toàn cầu", speech: "Giúp làm dịu mát khí hậu toàn cầu" },
+          { text: "Tạo ra đất đai màu mỡ cho trồng trọt và cung cấp khoáng sản", speech: "Tạo ra đất đai màu mỡ cho trồng trọt và cung cấp khoáng sản" },
+          { text: "Cung cấp nguồn nước ngọt tinh khiết quanh năm", speech: "Cung cấp nguồn nước ngọt tinh khiết quanh năm" },
+          { text: "Ngăn chặn triệt để các cơn bão nhiệt đới", speech: "Ngăn chặn triệt để các cơn bão nhiệt đới" }
+        ],
+        correct: 1, // B
+        explain: "Đá núi lửa phân hủy thành đất màu mỡ cho cam, táo, cà chua; đồng thời mang lại khoáng sản và tiềm năng du lịch khoáng nóng.",
+        speechExplain: "Núi lửa đem lại nguồn khoáng sản quý giá và đất đai màu mỡ cho cây cối, mùa màng bội thu."
+      }
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+    let isVoiceMuted = false;
+    let answered = false;
+
+    // === HỆ THỐNG ÂM THANH HIỆU ỨNG (Web Audio API) ===
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playClickSound() {
+      try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(460, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.08);
+      } catch(e){}
+    }
+
+    function playCorrectSound() {
+      try {
+        initAudio();
+        const now = audioCtx.currentTime;
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+          gain.gain.setValueAtTime(0.2, now + idx * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.28);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.08);
+          osc.stop(now + idx * 0.08 + 0.28);
+        });
+      } catch(e){}
+    }
+
+    function playWrongSound() {
+      try {
+        initAudio();
+        const now = audioCtx.currentTime;
+        [300, 220].forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.14);
+          gain.gain.setValueAtTime(0.12, now + idx * 0.14);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.14 + 0.22);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.14);
+          osc.stop(now + idx * 0.14 + 0.22);
+        });
+      } catch(e){}
+    }
+
+    function playVictoryFanfare() {
+      try {
+        initAudio();
+        const notes = [523, 523, 523, 659, 783, 1046];
+        const times = [0, 0.15, 0.3, 0.45, 0.65, 0.9];
+        const now = audioCtx.currentTime;
+        notes.forEach((freq, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + times[i]);
+          gain.gain.setValueAtTime(0.25, now + times[i]);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + times[i] + 0.4);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + times[i]);
+          osc.stop(now + times[i] + 0.5);
+        });
+      } catch(e){}
+    }
+
+    // === HỆ THỐNG GIỌNG ĐỌC TIẾNG VIỆT (Web Speech Synthesis) ===
+    function speakText(text, callback) {
+      if (isVoiceMuted || !('speechSynthesis' in window)) {
+        if (callback) callback();
+        return;
+      }
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'vi-VN';
+      utterance.rate = 0.95;
+      utterance.pitch = 1.05;
+
+      const voices = window.speechSynthesis.getVoices();
+      const viVoice = voices.find(v => v.lang.includes('vi') || v.lang.includes('VN'));
+      if (viVoice) utterance.voice = viVoice;
+
+      if (callback) {
+        utterance.onend = callback;
+        utterance.onerror = callback;
+      }
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function toggleMute() {
+      isVoiceMuted = !isVoiceMuted;
+      document.getElementById('toggleVoiceBtn').innerText = isVoiceMuted ? '🔇' : '🎙️';
+      if (isVoiceMuted) {
+        window.speechSynthesis.cancel();
+      } else {
+        speakCurrentQuestion();
+      }
+    }
+
+    // === QUẢN LÝ TIẾN TRÌNH TRÒ CHƠI ===
+    function startGame() {
+      initAudio();
+      document.getElementById('startScreen').style.display = 'none';
+      document.getElementById('quizScreen').style.display = 'block';
+      currentIndex = 0;
+      score = 0;
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      answered = false;
+      const current = questions[currentIndex];
+
+      document.getElementById('questionCounter').innerText = `📝 Câu: ${currentIndex + 1} / ${questions.length}`;
+      document.getElementById('scoreCounter').innerText = `⭐ Điểm: ${score * 10}`;
+      document.getElementById('progressBar').style.width = `${((currentIndex + 1) / questions.length) * 100}%`;
+
+      document.getElementById('nextBtn').style.display = 'none';
+      document.getElementById('explanationBox').style.display = 'none';
+
+      document.getElementById('questionText').innerHTML = current.q;
+
+      const container = document.getElementById('optionsContainer');
+      container.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
+
+      current.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.id = `opt-${idx}`;
+        btn.innerHTML = `<span class="opt-letter">${letters[idx]}</span> <span>${opt.text}</span>`;
+        btn.onclick = () => selectAnswer(idx);
+        container.appendChild(btn);
+      });
+
+      speakCurrentQuestion();
+    }
+
+    function speakCurrentQuestion() {
+      const q = questions[currentIndex];
+      let readStr = q.speechQ + ". ";
+      const letters = ['Đáp án A: ', 'Đáp án B: ', 'Đáp án C: ', 'Đáp án D: '];
+      q.options.forEach((opt, idx) => {
+        readStr += letters[idx] + opt.speech + ". ";
+      });
+      speakText(readStr);
+    }
+
+    function selectAnswer(chosenIdx) {
+      if (answered) return;
+      answered = true;
+      playClickSound();
+
+      const q = questions[currentIndex];
+      const isCorrect = (chosenIdx === q.correct);
+      const chosenBtn = document.getElementById(`opt-${chosenIdx}`);
+      const correctBtn = document.getElementById(`opt-${q.correct}`);
+
+      for (let i = 0; i < 4; i++) {
+        const btn = document.getElementById(`opt-${i}`);
+        if (btn) btn.disabled = true;
+      }
+
+      if (isCorrect) {
+        score++;
+        chosenBtn.classList.add('correct');
+        playCorrectSound();
+      } else {
+        chosenBtn.classList.add('wrong');
+        correctBtn.classList.add('correct');
+        playWrongSound();
+      }
+
+      document.getElementById('scoreCounter').innerText = `⭐ Điểm: ${score * 10}`;
+
+      // Hiển thị khung giải thích 2 dòng
+      const expBox = document.getElementById('explanationBox');
+      const expContent = document.getElementById('explanationContent');
+      expContent.innerHTML = q.explain;
+      expBox.style.display = 'block';
+
+      // Tự động đọc to lời giải thích
+      const prefix = isCorrect ? "Rất xuất sắc! " : "Tiếc quá, chưa chính xác! ";
+      speakText(prefix + q.speechExplain);
+
+      document.getElementById('nextBtn').style.display = 'inline-flex';
+    }
+
+    function nextQuestion() {
+      window.speechSynthesis.cancel();
+      currentIndex++;
+      if (currentIndex < questions.length) {
+        loadQuestion();
+      } else {
+        showEndScreen();
+      }
+    }
+
+    function showEndScreen() {
+      document.getElementById('quizScreen').style.display = 'none';
+      document.getElementById('endScreen').style.display = 'block';
+
+      const mascot = document.getElementById('finalMascot');
+      const title = document.getElementById('finalTitle');
+      const scoreTxt = document.getElementById('finalScoreText');
+
+      scoreTxt.innerHTML = `Em đã trả lời đúng <b>${score} / ${questions.length}</b> câu hỏi.<br>Tổng điểm đạt được: <b>${score * 10}</b> điểm!`;
+
+      if (score >= 8) {
+        mascot.innerText = '🌟🎉';
+        title.innerText = 'XUẤT SẮC TUYỆT VỜI!';
+        playVictoryFanfare();
+        startConfetti();
+        speakText(`Tuyệt vời! Em đã hoàn thành xuất sắc thử thách với số điểm ${score * 10} điểm.`);
+      } else if (score >= 5) {
+        mascot.innerText = '👏😊';
+        title.innerText = 'LÀM TỐT LẮM!';
+        speakText(`Làm tốt lắm! Em đã đạt ${score * 10} điểm. Hãy tiếp tục phát huy nhé.`);
+      } else {
+        mascot.innerText = '💪🌱';
+        title.innerText = 'HÃY CỐ GẮNG HƠN NHÉ!';
+        speakText(`Em đạt ${score * 10} điểm. Hãy cùng xem lại bài học và thử lại nhé.`);
+      }
+    }
+
+    function restartGame() {
+      stopConfetti();
+      document.getElementById('endScreen').style.display = 'none';
+      startGame();
+    }
+
+    // === HIỆU ỨNG PHÁO HOA ĂN MỪNG (Confetti) ===
+    let confettiTimer = null;
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function startConfetti() {
+      particles = [];
+      const colors = ['#FF5722', '#4CAF50', '#2196F3', '#FFEB3B', '#9C27B0'];
+      for (let i = 0; i < 90; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          r: Math.random() * 6 + 4,
+          d: Math.random() * 40 + 10,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          tilt: Math.random() * 10 - 10,
+          tiltAngleIncremental: (Math.random() * 0.07) + 0.05,
+          tiltAngle: 0
+        });
+      }
+      if (!confettiTimer) {
+        confettiTimer = setInterval(drawConfetti, 25);
+      }
+    }
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.lineWidth = p.r;
+        ctx.strokeStyle = p.color;
+        ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+        ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+        ctx.stroke();
+
+        p.tiltAngle += p.tiltAngleIncremental;
+        p.y += (Math.cos(p.d) + 3 + p.r / 2) / 1.5;
+        p.x += Math.sin(p.d);
+        p.tilt = Math.sin(p.tiltAngle) * 12;
+
+        if (p.y > canvas.height) {
+          p.y = -10;
+          p.x = Math.random() * canvas.width;
+        }
+      });
+    }
+
+    function stopConfetti() {
+      if (confettiTimer) {
+        clearInterval(confettiTimer);
+        confettiTimer = null;
+      }
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  </script>
+</body>
+</html>
